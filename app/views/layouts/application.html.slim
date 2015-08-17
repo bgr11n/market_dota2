@@ -6,14 +6,21 @@ html
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
 
-  nav
-  - if signed_in?
-      ul
-        li== current_user.nickname
-        li== image_tag current_user.image
-        li== link_to 'Log Out', '/app/logout'
-  - else
-    == link_to image_tag("http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png"), '/auth/steam'
+  nav.navbar.navbar-default
+    .container-fluid
+      a.navbar-brand href="#" Market
+
+      - if signed_in?
+        ul.nav.navbar-nav
+          li== link_to 'Продать', '/app/load_inventory'
+
+      ul.nav.navbar-nav.navbar-right
+        - if signed_in?
+          li== image_tag current_user.image, height: 50
+          li== link_to 'Выйти', '/users/logout', method: :post
+        - else
+          li== link_to image_tag("http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png"), '/auth/steam', style: "padding: 0"
 
   body
-    == yield
+    .container-fluid
+      == yield
