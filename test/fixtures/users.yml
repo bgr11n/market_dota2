@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: MyString
+  steam_id: MyString
+  nickname: MyString
+  name: MyString
+  image: MyString
+  profile_url: MyString
+  visibility_state: MyString
+
+two:
+  uid: MyString
+  steam_id: MyString
+  nickname: MyString
+  name: MyString
+  image: MyString
+  profile_url: MyString
+  visibility_state: MyString
