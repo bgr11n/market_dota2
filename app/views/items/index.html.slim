@@ -1,0 +1,19 @@
+.row
+  .col-md-8.col-md-offset-2
+    ul.list-group.items-to-sell
+      - @items.each do |item|
+        li.list-group-item.item
+          a.item-link href="#{item_url(item.id)}"
+            img src="#{item.icon_url}/62x62f" alt="#{item.name}" style="border-color: ##{item.name_color}"/
+            .item-main-info
+              h4 style="color: ##{item.name_color}"
+                = item.name
+              p= item.type
+            .min-price
+              p
+                | от
+                br
+                span #{Settings[:app][:currency][:sign]}#{item.min_price} #{Settings[:app][:currency][:code]}
+            .listing-count
+              p= item.listings.size
+

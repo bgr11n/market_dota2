@@ -1,0 +1,43 @@
+ul.items-to-sell {
+  li.item {
+    border: none;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  a.item-link {
+    display: block;
+    padding: 15px;
+    overflow: hidden;
+    border: 1px solid #414141;
+    background-color: #353535;
+    color: #8f98a0;
+    &:hover {
+      border-color: #ADADAD;
+      text-decoration: none;
+    }
+    .item-main-info {
+      float: left;
+    }
+    .listing-count, .min-price {
+      float: right;
+      margin-left: 15px;
+      text-align: center;
+      p { padding: 0 20px; }
+    }
+    .listing-count p { margin: 22px 0; }
+    .min-price p {
+      margin: 3px 0;
+      span {
+        color: #f8f8f8;
+      }
+    }
+    img {
+      float: left;
+      margin-right: 15px;
+      border: 1px solid;
+    }
+    h4, p {
+      margin-bottom: 0;
+    }
+  }
+}

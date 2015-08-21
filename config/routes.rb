@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  get 'inventory', to: 'inventory#index', as: :inventory
+  get 'item_price', to: 'inventory#item_price'
+  resources :items, only: [:index, :create, :show]
+
   get 'users/index'
   post 'users/logout'
 
-  get 'app/index'
-  get 'app/load_inventory'
-  root 'app#index'
+  put 'app/asd'
 
+  root to: 'items#index'
   post 'auth/steam/callback' => 'users#auth_callback'
 end

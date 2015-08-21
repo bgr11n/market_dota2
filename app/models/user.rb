@@ -7,4 +7,6 @@ class User
   field :name, type: String
   field :image, type: String
   field :profile_url, type: String
+
+  has_many :listings
 end

@@ -1,1 +1,10 @@
-steam_api_key: 25BBD519FFF6AA4AA389F19553A44CF8
+app:
+  :fee: 0.08
+  :currency:
+    :sign: $
+    :code: USD
+steam:
+  :api_key: 25BBD519FFF6AA4AA389F19553A44CF8
+  :price_url: http://steamcommunity.com/market/priceoverview
+  :listing_url: http://steamcommunity.com/market/listings
+  :price_history_url: http://steamcommunity.com/market/pricehistory

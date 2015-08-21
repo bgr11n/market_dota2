@@ -8,19 +8,22 @@ html
 
   nav.navbar.navbar-default
     .container-fluid
-      a.navbar-brand href="#" Market
+      a.navbar-brand href="/" Market
 
       - if signed_in?
         ul.nav.navbar-nav
-          li== link_to 'Продать', '/app/load_inventory'
+          li== link_to 'Мои вещи', inventory_url
 
       ul.nav.navbar-nav.navbar-right
         - if signed_in?
           li== image_tag current_user.image, height: 50
-          li== link_to 'Выйти', '/users/logout', method: :post
+          li== link_to 'Выйти', users_logout_url, method: :post
         - else
           li== link_to image_tag("http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png"), '/auth/steam', style: "padding: 0"
 
   body
     .container-fluid
       == yield
+
+javascript:
+  window.app = { 'fee': #{{Settings[:app][:fee].to_json}} }
