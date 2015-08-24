@@ -3,6 +3,7 @@ app:
   :currency:
     :sign: $
     :code: USD
+    :steam_code: 1
 steam:
   :api_key: 25BBD519FFF6AA4AA389F19553A44CF8
   :price_url: http://steamcommunity.com/market/priceoverview

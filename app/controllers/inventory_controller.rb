@@ -27,7 +27,7 @@ class InventoryController < ApplicationController
   end
 
   def item_price
-    res = HTTParty.get("#{Settings[:steam][:price_url]}?appid=570&currency=1&market_hash_name=#{params[:market_hash_name]}")
+    res = HTTParty.get("#{Settings[:steam][:price_url]}?appid=570&currency=#{Settings[:app][:currency][:steam_code]}&market_hash_name=#{params[:market_hash_name]}")
     render json: res.to_json
   end
 end
