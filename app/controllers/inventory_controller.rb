@@ -1,8 +1,11 @@
 class InventoryController < ApplicationController
-  before_action :authenticate, only: [:load_inventory]
+  before_action :authenticate, only: [:index]
 
   def index
     hash = HTTParty.get(current_user.profile_url + "/inventory/json/570/2?l=russian")
+
+    # TODO: Handle error like this:
+    # {"success"=>false, "Error"=>"Этот профиль скрыт."}
 
     @items = hash['rgInventory'].map do |k, v|
 

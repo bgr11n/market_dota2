@@ -37,13 +37,15 @@ class Item
 
     @updatePrice = (buyPrice) =>
       price = +@price()
+      newPrice = (buyPrice - buyPrice * @fee).toFixed(2)
       newBuyPrice = (price + price * @fee).toFixed(2)
-      @price (buyPrice - buyPrice * @fee).toFixed(2) if buyPrice != +newBuyPrice
+      @price newPrice if buyPrice != +newBuyPrice
 
     @updateBuyPrice = (price) =>
       buyPrice = +@buyPrice()
       newPrice = (buyPrice - buyPrice * @fee).toFixed(2)
-      @buyPrice (price + price * @fee).toFixed(2) if price != +newPrice
+      newBuyPrice = (price + price * @fee).toFixed(2)
+      @buyPrice newBuyPrice if price != +newPrice
 
     @serialized = ko.computed =>
       {

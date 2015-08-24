@@ -1,8 +1,36 @@
 .row
-  .col-md-8.col-md-offset-2
-    h1= @item.name
-    ul.list-group
-      - @item.listings.each do |listing|
-        li
-          p= listing.buy_price
+  .col-md-10.col-md-offset-1.item-info-with-listings
+    .large-img
+      img src="#{@item.icon_url}/360x360f"
+    .detail-info
+      h1 style="color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }"= @item.name
+      p= @item.type
+      br
+
+      .item-description
+        - @item.descriptions.each do |description|
+          p style="color: #{ description['color'] ? '#' + description['color'] : '#D2D2D2' }"
+            = description['value'].html_safe
+      br
+
+      p.tags
+        | Теги:&nbsp;
+        span= @item.human_tags
+
+    .listings
+      .list-header
+        h3 Лоты
+      ul.list-group
+        - @item.listings.each do |listing|
+          li.list-group-item
+            .listing
+              img style="border-color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }" src="#{@item.icon_url}/62x62f"
+              .small-info
+                h4 style="color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }" = @item.name
+                p= @item.type
+              .buy-btn
+                a.btn.btn-success href="javascript:void" Купить
+              .buy-price
+                p #{Settings[:app][:currency][:sign]}#{listing.buy_price} #{Settings[:app][:currency][:code]}
+              .user-img
 

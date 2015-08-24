@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :parse_json_item, only: [:create]
 
   def index
-    @items = Item.all.select { |i| i.listings.size > 0 }
+    @items = Item.includes(:listings).all.select { |i| i.listings.size > 0 }
   end
 
   def create
@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    @item = Item.includes(:listings).find(params[:id])
   end
 
   private
