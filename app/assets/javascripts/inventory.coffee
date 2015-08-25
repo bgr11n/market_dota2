@@ -9,8 +9,18 @@ class @InventoryVM
       $.get "/item_price?market_hash_name=#{@selectedItem().marketHashName}", (res) =>
         @selectedItem().steamPriceInfo res
 
+    @validate = =>
+      @selectedItem().validate()
+
 class Item
   constructor: (data={}) ->
+    @priceCss = ko.observableArray []
+    @buyPriceCss = ko.observableArray []
+    @priceCssClass = ko.computed =>
+      'input-group ' + @priceCss().join(' ')
+    @buyPriceCssClass = ko.computed =>
+      'input-group ' + @buyPriceCss().join(' ')
+
     @item_id = data.item_id
     @classid = data.classid
     @name = data.name
@@ -26,6 +36,8 @@ class Item
     @price = ko.observable('').extend({ throttle: 150 })
     @buyPrice = ko.observable('').extend({ throttle: 150 })
     @steamPriceInfo = ko.observable {}
+
+    @errors = ko.observableArray []
 
     @price.subscribe =>
       price = +@price()
@@ -46,6 +58,17 @@ class Item
       newPrice = (buyPrice - buyPrice * @fee).toFixed(2)
       newBuyPrice = (price + price * @fee).toFixed(2)
       @buyPrice newBuyPrice if price != +newPrice
+
+    @validate = =>
+      @errors []
+      @priceCss []
+      @buyPriceCss []
+      @priceCss.push 'has-error' unless +@price() > 0
+      @buyPriceCss.push 'has-error' unless +@buyPrice() > 0
+      unless +@price() > 0 and +@buyPrice() > 0
+        @errors.push 'Необходимо указать действительную цену.'
+        return false
+      true
 
     @serialized = ko.computed =>
       {
