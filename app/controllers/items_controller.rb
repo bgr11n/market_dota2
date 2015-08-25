@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.includes(:listings).find(params[:id])
+    @item = Item.includes(:listings).find_by(market_hash_name: params[:market_hash_name])
   end
 
   private
@@ -25,7 +25,8 @@ class ItemsController < ApplicationController
     item.name = data['name']
     item.market_hash_name = data['market_hash_name']
     item.name_color = data['name_color']
-    item.descriptions = data['descriptions']
+    # TODO: need better solution
+    item.descriptions = data['descriptions'].empty? ? [] : []
     item.type = data['type']
     item.icon_url = data['icon_url']
     item.tags = data['tags']

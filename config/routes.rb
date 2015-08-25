@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   get 'inventory', to: 'inventory#index', as: :inventory
   get 'item_price', to: 'inventory#item_price'
-  resources :items, only: [:index, :create, :show]
+  resources :items, only: [:index, :create]
+  get '/items/:market_hash_name' => 'items#show', as: :item
 
   get 'users/index'
   post 'users/logout'

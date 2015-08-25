@@ -3,7 +3,7 @@
     ul.list-group.items-to-sell
       - @items.each do |item|
         li.list-group-item.item
-          a.item-link href="#{item_url(item.id)}"
+          a.item-link href="#{item_url(item.market_hash_name)}"
             img src="#{item.icon_url}/62x62f" alt="#{item.name}" style="border-color: ##{item.name_color}"/
             .item-main-info
               h4 style="color: ##{item.name_color}"
