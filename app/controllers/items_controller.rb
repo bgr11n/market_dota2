@@ -9,6 +9,7 @@ class ItemsController < ApplicationController
     item = fetch_item @data
     listing = fetch_listing @data
     item.listings << listing
+    # TODO: if some errors
     if item.save && listing.save
       redirect_to :root
     end
