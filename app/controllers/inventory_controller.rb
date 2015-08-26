@@ -2,20 +2,19 @@ class InventoryController < ApplicationController
   before_action :authenticate, only: [:index]
 
   def index
-    hash = HTTParty.get(current_user.profile_url + "/inventory/json/570/2?l=russian")
+    res = HTTParty.get(current_user.profile_url + "/inventory/json/570/2?l=russian")
+    render 'errors/hidden_profile' and return unless res['success']
 
-    # TODO: Handle error like this:
-    # {"success"=>false, "Error"=>"Этот профиль скрыт."}
+    @items = res['rgInventory'].map do |k, v|
 
-    @items = hash['rgInventory'].map do |k, v|
-
-      tradable = hash['rgDescriptions']["#{v['classid']}_#{v['instanceid']}"]['tradable']
-      data = hash['rgDescriptions']["#{v['classid']}_#{v['instanceid']}"]
+      tradable = res['rgDescriptions']["#{v['classid']}_#{v['instanceid']}"]['tradable']
+      data = res['rgDescriptions']["#{v['classid']}_#{v['instanceid']}"]
       {
         item_id: v['id'],
         classid: v['classid'],
         name: data['name'],
         market_hash_name: data['market_hash_name'],
+        market_name: data['market_name'],
         name_color: data['name_color'],
         descriptions: data['descriptions'],
         type: data['type'],

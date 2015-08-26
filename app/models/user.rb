@@ -7,6 +7,10 @@ class User
   field :name, type: String
   field :image, type: String
   field :profile_url, type: String
+  field :balance, type: Integer, default: 0
 
-  has_many :listings
+  has_many :listings, inverse_of: :user
+  has_many :bought, class_name: 'Listing', inverse_of: :bought_by
+
+  validates :balance, presence: true, numericality: true
 end

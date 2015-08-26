@@ -5,6 +5,7 @@ class Item
   field :classid, type: String
   field :name, type: String
   field :market_hash_name, type: String
+  field :market_name, type: String
   field :name_color, type: String
   field :descriptions, type: Array
   field :type, type: String

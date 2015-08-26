@@ -16,6 +16,7 @@ html
 
       ul.nav.navbar-nav.navbar-right
         - if signed_in?
+          li== '%.02f' % (current_user.balance / 100.0)
           li== image_tag current_user.image, height: 50
           li== link_to 'Выйти', users_logout_url, method: :post
         - else
@@ -24,6 +25,12 @@ html
   body
     .container-fluid
       == yield
+
+  - if flash[:notice]
+    .alert.notices.alert-dismissible.fade.in role="alert"
+      button.close type="button" data-dismiss="alert" aria-label="Close"
+        span aria-hidden="true" ×
+      p= flash[:notice]
 
 javascript:
   window.app = { 'fee': #{{Settings[:app][:fee].to_json}} }

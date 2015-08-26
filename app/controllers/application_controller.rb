@@ -7,4 +7,8 @@ class ApplicationController < ActionController::Base
   def authenticate
     redirect_to :root unless signed_in?
   end
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
 end

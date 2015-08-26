@@ -2,12 +2,12 @@
   .col-md-7
     ul.list-inline.inventory-list data-bind="foreach: items"
       li data-bind="style: { 'border-color': '#' + nameColor }"
-        img data-bind="attr: { src: iconUrl + '/96x96f', title: name }, click: $parent.viewItem"
+        img data-bind="attr: { src: iconUrl + '/96x96f', title: marketName }, click: $parent.viewItem"
 
   .col-md-5.selected-item data-bind="style: { 'border-color': '#' + selectedItem().nameColor }"
     .item-wrapper
-      img data-bind="attr: { src: selectedItem().iconUrl + '/330x192', title: selectedItem().name }"
-      h2 data-bind="text: selectedItem().name, style: { color: '#' + selectedItem().nameColor }"
+      img data-bind="attr: { src: selectedItem().iconUrl + '/330x192', title: selectedItem().marketName }"
+      h2 data-bind="text: selectedItem().marketName, style: { color: '#' + selectedItem().nameColor }"
       p data-bind="text: selectedItem().type"
       br
 
@@ -20,7 +20,7 @@
         span data-bind="text: selectedItem().humanTags"
 
     div.price-data
-      a target="_blank" data-bind="attr: { href: #{Settings[:steam][:listing_url].to_json} + '/570/' + selectedItem().marketHashName, title: name }" В Steam маркете:
+      a target="_blank" data-bind="attr: { href: #{Settings[:steam][:listing_url].to_json} + '/570/' + selectedItem().marketHashName, title: selectedItem().marketName }" В Steam маркете:
       <!-- ko ifnot: selectedItem().steamPriceInfo().lowest_price -->
       p Загрузка ...
       <!-- /ko -->
@@ -46,8 +46,8 @@
       .modal-content
         .modal-header
           button type="button" class="close" data-dismiss="modal" &times;
-          img.item.pull-left data-bind="attr: { src: selectedItem().iconUrl + '/96x96', title: selectedItem().name }, style: { 'border-color': '#' + selectedItem().nameColor }"
-          h3.modal-title data-bind="text: selectedItem().name"
+          img.item.pull-left data-bind="attr: { src: selectedItem().iconUrl + '/96x96', title: selectedItem().marketName }, style: { 'border-color': '#' + selectedItem().nameColor }"
+          h3.modal-title data-bind="text: selectedItem().marketName"
           span data-bind="text: selectedItem().type"
         .modal-body
           p Впилить график продаж как со Steam так и с нашей площадки.

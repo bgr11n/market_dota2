@@ -4,6 +4,8 @@ development:
       database: market_dota2_development
       hosts:
         - localhost:27017
+  options:
+    raise_not_found_error: false
 
 test:
   sessions:

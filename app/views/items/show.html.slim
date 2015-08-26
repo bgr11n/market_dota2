@@ -3,7 +3,7 @@
     .large-img
       img src="#{@item.icon_url}/360x260f"
     .detail-info
-      h1 style="color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }"= @item.name
+      h1 style="color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }"= @item.market_name
       p= @item.type
       br
 
@@ -26,10 +26,12 @@
             .listing
               img style="border-color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }" src="#{@item.icon_url}/62x62f"
               .small-info
-                h4 style="color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }" = @item.name
+                h4 style="color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }" = @item.market_name
                 p= @item.type
               .buy-btn
-                a.btn.btn-success href="javascript:void" Купить
+                form action="#{buy_path}" method="post"
+                  input type="hidden" name="id" value="#{listing.id}"
+                  button.btn.btn-success type="submit" Купить
               .buy-price
                 p #{Settings[:app][:currency][:sign]}#{listing.buy_price} #{Settings[:app][:currency][:code]}
               .user-img
