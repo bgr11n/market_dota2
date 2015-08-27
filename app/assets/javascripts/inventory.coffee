@@ -32,9 +32,10 @@ class Item
     @type = data.type
     @tags = data.tags
     @humanTags = @tags.map( (tag) -> tag.name ).join(', ')
+    @baseFee = window.app.fee
 
     @fee = (val) ->
-      if +val <= 0.07 then 0.6 else window.app.fee
+      if +val <= 0.07 then 0.6 else @baseFee
     @price = ko.observable('').extend({ throttle: 150 })
     @buyPrice = ko.observable('').extend({ throttle: 150 })
     @steamPriceInfo = ko.observable {}

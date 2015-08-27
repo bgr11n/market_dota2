@@ -23,6 +23,7 @@ class InventoryController < ApplicationController
       } if tradable == 1
 
     end.compact!
+    render 'errors/no_tradable_item' and return if @items.empty?
   end
 
   def item_price

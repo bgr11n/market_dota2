@@ -1,23 +1,18 @@
 class ItemsController < ApplicationController
   before_action :authenticate, only: [:buy_listing, :create]
   before_action :load_listing, only: [:buy_listing]
-  # before_action :check_user, only: [:buy_listing]
-  before_action :buy_user_balance, only: [:buy_listing]
-  before_action :sell_user_balance, only: [:buy_listing]
   before_action :parse_json_item, only: [:create]
+  before_action :fetch_data, only: [:create]
 
   def index
     @items = Item.includes(:listings).all.select { |i| i.listings.size > 0 }
   end
 
   def create
-    item = fetch_item @data
-    listing = fetch_listing @data
-    item.listings << listing
-    # TODO: if some errors
-    if item.save && listing.save
-      redirect_to :root
-    end
+    redirect_to(:root) and return if @item.save && @listing.save
+    errors = @item.errors.messages.values.flatten
+    errors += @listing.errors.messages.values.flatten
+    redirect_to item_path(@listing.item.market_hash_name), :flash => { :notice => errors.join("<br>") }
   end
 
   def show
@@ -25,34 +20,21 @@ class ItemsController < ApplicationController
   end
 
   def buy_listing
-    @listing.update status: Listing::SOLD, bought_by_id: current_user.id
-    redirect_to :root, :flash => { :notice => "Поздравляем с успешной покупкой." }
+    status = @listing.sell_to current_user
+    redirect_to(:root, :flash => { :notice => "Поздравляем с успешной покупкой." }) and return if status[:success]
+    redirect_to item_path(@listing.item.market_hash_name), :flash => { :notice => status[:errors].join("<br>") }
   end
 
   private
 
+  def fetch_data
+    @item = fetch_item @data
+    @listing = fetch_listing @data
+    @listing.item = @item
+  end
+
   def load_listing
     @listing = Listing.find(params[:id])
-  end
-
-  def buy_user_balance
-    balance = current_user.balance - @listing.buy_price.to_f * 100
-    if balance < 0
-      redirect_to item_path(@listing.item.market_hash_name), :flash => { :notice => "Не достаточно денег на счету." }
-    else
-      current_user.balance = balance
-      current_user.save
-    end
-  end
-
-  def sell_user_balance
-    user = @listing.user
-    user.balance = user.balance + @listing.price.to_f * 100
-    user.save
-  end
-
-  def check_user
-    redirect_to item_path(@listing.item[:market_hash_name]), :flash => { :notice => "Вы не можете купить свою вещь." } if @listing.user_id == current_user.id
   end
 
   def fetch_item data
@@ -71,8 +53,8 @@ class ItemsController < ApplicationController
   end
 
   def fetch_listing data
-    Listing.new price: data['price'],
-                buy_price: data['buy_price'],
+    Listing.new price: (data['price'].to_f * 100),
+                buy_price: (data['buy_price'].to_f * 100),
                 user_id: current_user.id,
                 status: Listing::ACTIVE
   end

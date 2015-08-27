@@ -12,5 +12,5 @@ class User
   has_many :listings, inverse_of: :user
   has_many :bought, class_name: 'Listing', inverse_of: :bought_by
 
-  validates :balance, presence: true, numericality: true
+  validates_numericality_of :balance, greater_than_or_equal_to: 0, message: "Не достаточно денег на счету."
 end

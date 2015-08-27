@@ -13,17 +13,17 @@ class Item
   field :tags, type: Array
   field :human_tags, type: String
   field :steam_price_info, type: Hash
-  field :min_price, type: String
+  field :min_price, type: Integer
 
   has_many :listings
 
-  before_save :fetch_min_price
+  validates_numericality_of :min_price, greater_than: 0
 
   default_scope -> { order(:updated_at => :desc) }
 
   private
 
-  def fetch_min_price
-    self.min_price = listings.map(&:buy_price).sort.first
+  def fetch_min_buy_price
+    self.update min_price: self.listings.where(status: Listing::ACTIVE).map(&:buy_price).sort.first
   end
 end
