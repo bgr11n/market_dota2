@@ -21,8 +21,12 @@ test:
 production:
   sessions:
     default:
-      database: market_dota2_development
-      hosts:
-        - localhost:27017
+      uri: 'mongodb://heroku_znkmpkg0:sn0ucvkq5bsc13i6ld0e77fh1@ds035663.mongolab.com:35663/heroku_znkmpkg0'
   options:
     raise_not_found_error: false
+    consistency: :strong
+    max_retries: 30
+    retry_interval: 1
+    timeout: 15
+    safe: true
+    refresh_interval: 10
