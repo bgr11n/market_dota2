@@ -10,7 +10,7 @@
       .item-description
         - @item.descriptions.each do |description|
           p style="color: #{ description['color'] ? '#' + description['color'] : '#D2D2D2' }"
-            = description['value'].html_safe
+            = description['value'].try :html_safe
       br
 
       p.tags
