@@ -38,6 +38,9 @@ gem 'slim-rails'
 gem 'knockoutjs-rails'
 gem 'httparty'
 
+
+gem 'rails_12factor', group: :production
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
