@@ -9,10 +9,10 @@ class ItemsController < ApplicationController
   end
 
   def create
-    redirect_to(:root) and return if @item.save && @listing.save
+    redirect_to(:root) and return if @listing.save && @item.save
     errors = @item.errors.messages.values.flatten
     errors += @listing.errors.messages.values.flatten
-    redirect_to item_path(@listing.item.market_hash_name), :flash => { :notice => errors.join("<br>") }
+    redirect_to inventory_path, :flash => { :notice => errors.join("<br>") }
   end
 
   def show
