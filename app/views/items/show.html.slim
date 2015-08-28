@@ -29,13 +29,13 @@
                 h4 style="color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }" = @item.market_name
                 p= @item.type
               .buy-btn
-                - if listing.user_id == current_user.id
-                    button.btn.btn-danger type="submit" Удалить
+                - if created_by_current_user listing.user_id
+                    button.btn.btn-warning type="submit" Редактровать
                 - else
                   form action="#{buy_path}" method="post"
                     input type="hidden" name="id" value="#{listing.id}"
                     button.btn.btn-success type="submit" Купить
               .buy-price
-                p #{Settings[:app][:currency][:sign]}#{ formated listing.buy_price } #{Settings[:app][:currency][:code]}
+                p= formated listing.buy_price
               .user-img
 

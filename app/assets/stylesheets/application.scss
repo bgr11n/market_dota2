@@ -10,13 +10,17 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require_self
+ *= require_tree .
  */
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.wrapper {
+  background-color: #353535;
+  color: #d2d2d2;
+}
 body {
   background-color: #202020;
 }
@@ -29,4 +33,19 @@ body {
   opacity: 0.95;
   margin: 0;
   background-color: #fff;
+}
+.btn-menu {
+  border: none;
+  background: transparent;
+  line-height: 50px;
+  padding: 0 25px;
+  &:hover {
+    background: rgba(0,0,0, .1);
+  }
+}
+.dropdown-menu {
+  border-radius: 0;
+  .dropdown-header {
+    text-align: center;
+  }
 }

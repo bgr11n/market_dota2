@@ -13,7 +13,7 @@
               p
                 | от
                 br
-                span #{Settings[:app][:currency][:sign]}#{ formated item.min_price} #{Settings[:app][:currency][:code]}
+                span= formated item.min_price
             .listing-count
               p= item.listings.size
 

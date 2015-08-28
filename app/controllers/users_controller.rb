@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
   before_action :load_user, only: :auth_callback
+  before_action :authenticate, only: [:account]
 
-  def index
+  def account
+    @sold_listings = Listing.unscoped.includes(:item)
+                            .any_of( { user_id: current_user.id }, { bought_by_id: current_user.id } )
+                            .where( status: Listing::SOLD )
+                            .order(updated_at: :desc)
+    @active_listings = Listing.unscoped.active.by current_user
   end
 
   def auth_callback
@@ -11,7 +17,7 @@ class UsersController < ApplicationController
 
   def logout
     reset_session
-    redirect_to :back
+    redirect_to :root
   end
 
   private

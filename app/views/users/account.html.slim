@@ -1,0 +1,31 @@
+.row
+  .col-md-10.col-md-offset-1.wrapper
+    ul.nav.nav-tabs role="tablist"
+      li class="active"
+        a href="#active-listing" data-toggle="tab" Активные лоты
+      li
+        a href="#listing-history" data-toggle="tab" История сделок
+      li
+        a href="#settings" data-toggle="tab" Настройки
+
+    <!-- Tab panes -->
+    .tab-content
+      .tab-pane.active id="active-listing"
+        .row
+          .col-md-12
+            ul.list-group
+              - @active_listings.each do |listing|
+                li.list-group-item
+                  a class="item-link" href="#{item_url(listing.item.market_hash_name)}"
+                    = render 'listing', listing: listing
+
+      .tab-pane.active id="listing-history"
+        .row
+          .col-md-12
+            ul.list-group
+              - @sold_listings.each do |listing|
+                li.list-group-item
+                  a class="item-link #{ created_by_current_user(listing.user_id) ? 'sold' : 'bought' }" href="#{item_url(listing.item.market_hash_name)}"
+                    = render 'listing', listing: listing
+
+      .tab-pane id="settings" TODO

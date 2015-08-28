@@ -12,15 +12,27 @@ html
 
       - if signed_in?
         ul.nav.navbar-nav
-          li== link_to 'Мои вещи', inventory_url
+          li= link_to 'Мои вещи', inventory_url
 
       ul.nav.navbar-nav.navbar-right
         - if signed_in?
-          li== formated current_user.balance
-          li== image_tag current_user.image, height: 50
-          li== link_to 'Выйти', users_logout_url, method: :post
+          li
+            .dropdown
+              button.btn-menu.dropdown-toggle type="button" id="menu1" data-toggle="dropdown"
+                = current_user.nickname
+                |&nbsp;
+                span.caret
+              ul.dropdown-menu role="menu" aria-labelledby="menu1"
+                li.dropdown-header
+                  span style="color: #{ current_user.balance > 10 ? '#3c763d' : '#ad6e6d' }"= formated current_user.balance
+                li
+                  a href="#{account_path}" Аккаунт
+                li.divider
+                li
+                  = link_to 'Выйти', users_logout_url, method: :post
+          li= image_tag current_user.image, height: 50
         - else
-          li== link_to image_tag("http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png"), '/auth/steam', style: "padding: 0"
+          li= link_to image_tag("http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_large_noborder.png"), '/auth/steam', style: "padding: 0"
 
   body
     .container-fluid

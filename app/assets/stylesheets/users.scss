@@ -1,3 +1,78 @@
-// Place all the styles related to the users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.nav-tabs {
+  border-bottom: 1px solid #414141;
+  a { color: #d2d2d2; }
+  li, li.active {
+    a { border: none; border-radius: 0; background-color: transparent; }
+    a:hover { border: none; border-radius: 0; background-color: transparent; }
+    a:focus { border: none; border-radius: 0; background-color: transparent; }
+  }
+
+  li {
+    a {}
+    a:hover {
+      background-color: rgba(255,255,255,.2);
+    }
+  }
+  li.active {
+    a, a:hover, a:focus { color: #d2d2d2; background-color: rgba(255,255,255,.2); }
+  }
+}
+#listing-history,
+#active-listing {
+  ul.list-group {
+    li.list-group-item {
+      margin-top: 15px;
+      padding: 0;
+      border-radius: 0;
+      background-color: transparent;
+      border: none;
+      a.item-link.sold {
+        background-color: #345752;
+        border-color: #375E58;
+        &:hover {
+          border-color: #407C74;
+        }
+      }
+      a.item-link.bought {
+        background-color: #764848;
+        border-color: #834E4D;
+        &:hover {
+          border-color: #A36261;
+        }
+      }
+      a.item-link {
+        display: block;
+        padding: 15px;
+        overflow: hidden;
+        border: 1px solid #414141;
+        color: #8f98a0;
+        font-size: 13px;
+        background-color: rgba(255,255,255,.05);
+        p { margin: 0; }
+        h4 {
+          font-size: 16px;
+          margin: 3px 0;
+        }
+        &:hover {
+          border-color: #5d5d5d;
+          text-decoration: none;
+        }
+        img {
+          float: left;
+          margin-right: 15px;
+          border: 1px solid;
+        }
+        .item-main-info {
+          float: left;
+        }
+        .price {
+          float: right;
+          margin: 12px 0;
+          span {
+            color: #f8f8f8;
+          }
+        }
+      }
+    }
+  }
+}

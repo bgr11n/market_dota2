@@ -16,6 +16,8 @@ class Listing
   validate :user_cant_buy_own_item
   validates :status, inclusion: { in: [0, 100, 200, 300], message: "%{value} is not a valid status" }
 
+  scope :active, -> { where(status: Listing::ACTIVE) }
+  scope :by, ->(user) { user ? where(user_id: user.id) : all }
   default_scope -> { where(status: Listing::ACTIVE).order(buy_price: :asc) }
 
   after_save :update_item
