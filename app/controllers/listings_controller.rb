@@ -2,6 +2,11 @@ class ListingsController < ApplicationController
   before_action :authenticate
   before_action :load_listing
 
+  def show
+    listing = Listing.find(params[:id])
+    render json: { listing: listing, item: listing.item }
+  end
+
   def edit
     @item = @listing.item
   end

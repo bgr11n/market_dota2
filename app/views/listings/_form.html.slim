@@ -1,0 +1,30 @@
+/ Modal
+div id="for-edit" class="modal fade" role="dialog"
+  .modal-dialog
+
+    / Modal content
+    .modal-content
+      .modal-header
+        button type="button" class="close" data-dismiss="modal" &times;
+        img.item.pull-left
+        h3.modal-title
+        span.type
+      .modal-body
+        p Впилить график продаж как со Steam так и с нашей площадки.
+      .modal-footer
+        div
+          .alert.alert-danger
+            p Сюда ошибки если есть
+        = form_tag('/items', method: :post, class: 'set-price')
+          .form-group.pull-left
+            label for="price" Вы получите:
+            .input-group
+              .input-group-addon= Settings[:app][:currency][:sign]
+              input.form-control type="number" step="0.01" id="price"
+          .form-group.pull-left
+            label for="buy-price" Покупатель заплатит:
+            .input-group
+              .input-group-addon= Settings[:app][:currency][:sign]
+              input.form-control type="number" step="0.01" id="buy-price"
+          input type="hidden" name='json_item'
+          button type="submit" class="btn btn-success" Выставить на продажу

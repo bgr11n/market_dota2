@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'item_price', to: 'inventory#item_price'
   resources :items, only: [:index, :create]
   get '/items/:market_hash_name', to: 'items#show', as: :item
-  resources :listings, only: [:update, :destroy] do
+  resources :listings, only: [:show, :update, :destroy] do
     post '/buy', to: 'listings#buy', on: :collection, as: :buy
   end
 

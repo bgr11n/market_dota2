@@ -30,7 +30,7 @@
                 p= @item.type
               .buy-btn
                 - if created_by_current_user listing.user_id
-                    a.btn.btn-success disabled="disabled" Купить
+                    a.btn.btn-warning class="edit-listing-btn" data-toggle="modal" data-target="#for-edit" data-lid="#{listing.id}" Редактировать
                 - else
                     form action="#{buy_listings_path}" method="post"
                       input type="hidden" name="id" value="#{listing.id}"
@@ -39,3 +39,4 @@
                 p= formated listing.buy_price
               .user-img
 
+= render 'listings/form'
