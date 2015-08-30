@@ -30,11 +30,11 @@
                 p= @item.type
               .buy-btn
                 - if created_by_current_user listing.user_id
-                    button.btn.btn-warning type="submit" Редактровать
+                    a.btn.btn-warning type="submit" Редактровать
                 - else
-                  form action="#{buy_path}" method="post"
-                    input type="hidden" name="id" value="#{listing.id}"
-                    button.btn.btn-success type="submit" Купить
+                    form action="#{buy_listings_path}" method="post"
+                      input type="hidden" name="id" value="#{listing.id}"
+                      button.btn.btn-success type="submit" Купить
               .buy-price
                 p= formated listing.buy_price
               .user-img
