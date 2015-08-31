@@ -2,7 +2,9 @@ $(document).on 'ready page:load', ->
   $('.edit-listing-btn').on 'click', (e) ->
     btn = $(this)
     $.get "/listings/#{btn.data('lid')}", (data) ->
+      $('#for-edit .loader').addClass 'hide'
       matchData data
+      $('#for-edit .item-content').removeClass 'hide'
 
   do managePriceAndBuyPrice
 
