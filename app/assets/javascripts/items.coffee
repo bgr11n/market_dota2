@@ -31,3 +31,20 @@ managePriceAndBuyPrice = ->
 fee = (val) ->
   base = if +val <= 0.07 then 0.6 else @baseFee
   1 + base
+
+$(document).on 'submit','#for-edit form', (e) ->
+  $("#for-edit .errors").addClass 'hide'
+  fieldForValidation = ["#for-edit #price", "#for-edit #buy-price"]
+  errors = []
+  for field in fieldForValidation
+    $(field).parent().removeClass 'has-error'
+    unless valid field
+      $(field).parent().addClass 'has-error'
+      $("#for-edit .errors").removeClass 'hide'
+      $("#for-edit .errors p").text 'Необходимо указать действительную цену.'
+      errors.push false
+  errors.length == 0
+
+valid = (field) ->
+  val = +$(field).val()
+  val > 0

@@ -13,7 +13,7 @@ class ListingsController < ApplicationController
     if @listing.save
       redirect_to :back, :flash => { :notice => 'Изменения сохранены.' }
     else
-      redirect_to :back, :flash => { :notice => @listing.errors.full_messages.join("<br>") }
+      redirect_to :back, :flash => { :notice => @listing.errors.messages.values.flatten.join("<br>") }
     end
   end
 

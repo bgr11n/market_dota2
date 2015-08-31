@@ -1,6 +1,6 @@
 .row
   .col-md-10.col-md-offset-1.wrapper
-    ul.nav.nav-tabs role="tablist"
+    ul.nav.nav-tabs role="tablist" id="user-tab"
       li class="active"
         a href="#active-listing" data-toggle="tab" Активные лоты
       li
@@ -42,7 +42,16 @@
                         = listing.item.market_name
                       p= listing.item.type
                     .price
-                      span= formated listing.buy_price
+                      - if created_by_current_user(listing.user_id)
+                        span style="color: #32cd32"
+                          span.glyphicon.glyphicon-arrow-up style="color: #32cd32" aria-hidden="true"
+                          | &nbsp;
+                          = formated listing.price
+                      - else
+                        span style="color: #CD3232"
+                          span.glyphicon.glyphicon-arrow-down style="color: #CD3232" aria-hidden="true"
+                          | &nbsp;
+                          = formated listing.buy_price
 
       .tab-pane id="settings" TODO
 

@@ -34,27 +34,29 @@ class Item
     @humanTags = @tags.map( (tag) -> tag.name ).join(', ')
     @baseFee = window.app.fee
 
-    @fee = (val) ->
-      base = @baseFee
+    @fee = (trigger=false) ->
+      base = if trigger then 0.6 else @baseFee
       1 + base
-    @price = ko.observable('').extend({ throttle: 300 })
-    @buyPrice = ko.observable('').extend({ throttle: 300 })
+
+    @price = ko.observable('').extend({ throttle: 200 })
+    @buyPrice = ko.observable('').extend({ throttle: 200 })
     @steamPriceInfo = ko.observable {}
 
     @errors = ko.observableArray []
 
     @price.subscribe =>
       price = +@price()
-      if price > 0
-        newBuyPrice = (price * @fee(price)).toFixed(2)
-        @buyPrice newBuyPrice
-
+      buyPrice = +@buyPrice()
+      newBuyPrice = (price * @fee()).toFixed(2)
+      newBuyPrice = (price * @fee(true)).toFixed(2) if +newBuyPrice - price < 9e-3
+      @buyPrice newBuyPrice if price > 0 and +newBuyPrice != buyPrice
 
     @buyPrice.subscribe =>
       buyPrice = +@buyPrice()
-      if buyPrice > 0
-        newPrice = (buyPrice / @fee(buyPrice)).toFixed(2)
-        @price newPrice
+      price = +@price()
+      newPrice = (buyPrice / @fee()).toFixed(2)
+      newPrice = (buyPrice / @fee(true)).toFixed(2) if buyPrice - +newPrice < 9e-3
+      @price newPrice if buyPrice > 0 and +newPrice != price
 
     @validate = =>
       @errors []

@@ -17,7 +17,7 @@ class Item
 
   has_many :listings
 
-  validates_numericality_of :min_price, greater_than: 0
+  validates_numericality_of :min_price, greater_than: 0, message: 'Минимальная цена должна быть больше 0.'
 
   default_scope -> { order(:updated_at => :desc) }
 

@@ -7,14 +7,16 @@ class Listing
 
   AWAITS, ACTIVE, PENDING, SOLD = [0, 100, 200, 300]
 
-  belongs_to :item
+  belongs_to :item, touch: true
   belongs_to :user, inverse_of: :listings
   belongs_to :bought_by, class_name: 'User', inverse_of: :bought
 
-  validates_numericality_of :price, greater_than: 0
-  validates_numericality_of :buy_price, greater_than: 0
+  validates :item, presence: { message: 'не может быть пустым.' }
+  validates :user, presence: { message: 'не может быть пустым.' }
+  validates_numericality_of :price, greater_than: 0, message: 'Цена должна быть больше 0.'
+  validates_numericality_of :buy_price, greater_than: 0, message: 'Цена покупки должна быть больше 0.'
   validate :user_cant_buy_own_item
-  validates :status, inclusion: { in: [0, 100, 200, 300], message: "%{value} is not a valid status" }
+  validates :status, inclusion: { in: [0, 100, 200, 300], message: "%{value} не верный статус." }
 
   scope :active, -> { where(status: Listing::ACTIVE) }
   scope :by, ->(user) { user ? where(user_id: user.id) : all }

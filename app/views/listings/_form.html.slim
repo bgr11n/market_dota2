@@ -12,8 +12,8 @@ div id="for-edit" class="modal fade" role="dialog"
       .modal-body
         p Впилить график продаж как со Steam так и с нашей площадки.
       .modal-footer
-        div
-          .alert.alert-danger.hide
+        div.errors.hide
+          .alert.alert-danger
             p
         form.set-price action='' method='post'
           input name='_method' type='hidden' value='put'
