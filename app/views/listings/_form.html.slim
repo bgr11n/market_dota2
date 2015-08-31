@@ -13,18 +13,18 @@ div id="for-edit" class="modal fade" role="dialog"
         p Впилить график продаж как со Steam так и с нашей площадки.
       .modal-footer
         div
-          .alert.alert-danger
-            p Сюда ошибки если есть
-        = form_tag('/items', method: :post, class: 'set-price')
+          .alert.alert-danger.hide
+            p
+        form.set-price action='' method='post'
+          input name='_method' type='hidden' value='put'
           .form-group.pull-left
             label for="price" Вы получите:
             .input-group
               .input-group-addon= Settings[:app][:currency][:sign]
-              input.form-control type="number" step="0.01" id="price"
+              input.form-control type="number" step="0.01" name="listing[price]" id="price"
           .form-group.pull-left
             label for="buy-price" Покупатель заплатит:
             .input-group
               .input-group-addon= Settings[:app][:currency][:sign]
-              input.form-control type="number" step="0.01" id="buy-price"
-          input type="hidden" name='json_item'
+              input.form-control type="number" step="0.01" name="listing[buy_price]" id="buy-price"
           button type="submit" class="btn btn-success" Выставить на продажу

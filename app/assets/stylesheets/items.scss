@@ -25,10 +25,14 @@ ul.items-to-sell {
       p { padding: 0 20px; }
     }
     .listing-count p { margin: 22px 0; }
-    .min-price p {
-      margin: 3px 0;
-      span {
-        color: #f8f8f8;
+    .min-price {
+      width: 130px;
+      p {
+        margin: 3px 0;
+        span {
+          color: #f8f8f8;
+          font-size: 13px;
+        }
       }
     }
     img {
@@ -100,7 +104,11 @@ ul.items-to-sell {
         .buy-btn {
           margin-left: 25px;
           float: right;
+          .delete-listing-btn {
+            margin-left: 5px;
+          }
         }
+        .buy-price p { color: #f8f8f8; font-size: 13px; }
         .buy-price p { margin-top: 24px; margin-bottom: 24px; }
         .buy-btn a, button { margin-top: 17px; margin-bottom: 17px; }
       }

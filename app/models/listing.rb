@@ -22,6 +22,18 @@ class Listing
 
   after_save :update_item
 
+  def as_json
+    {
+      id: id.to_s,
+      status: status,
+      user_id: user_id,
+      price: price,
+      buy_price: buy_price,
+      item_id: item_id.to_s,
+      bought_by_id: bought_by_id
+    }
+  end
+
   def sell_to buyer
     buyer.balance -= self.buy_price
     self.bought_by_id = buyer.id

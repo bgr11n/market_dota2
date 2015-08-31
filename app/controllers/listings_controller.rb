@@ -3,23 +3,38 @@ class ListingsController < ApplicationController
   before_action :load_listing
 
   def show
-    listing = Listing.find(params[:id])
-    render json: { listing: listing, item: listing.item }
+    render json: { listing: @listing.as_json, item: @listing.item }
   end
 
-  def edit
-    @item = @listing.item
+  def update
+    price = listing_params[:price].to_f * 100
+    buy_price = listing_params[:buy_price].to_f * 100
+    @listing.assign_attributes price: price, buy_price: buy_price
+    if @listing.save
+      redirect_to :back, :flash => { :notice => 'Изменения сохранены.' }
+    else
+      redirect_to :back, :flash => { :notice => @listing.errors.full_messages.join("<br>") }
+    end
+  end
+
+  def destroy
+    @listing.delete
+    redirect_to :back, :flash => { :notice => 'Лот удален.' }
   end
 
   def buy
     status = @listing.sell_to current_user
-    redirect_to(:root, :flash => { :notice => "Поздравляем с успешной покупкой." }) and return if status[:success]
-    redirect_to item_path(@listing.item.market_hash_name), :flash => { :notice => status[:errors].join("<br>") }
+    redirect_to(:back, :flash => { :notice => "Поздравляем с успешной покупкой." }) and return if status[:success]
+    redirect_to :back, :flash => { :notice => status[:errors].join("<br>") }
   end
 
   private
 
   def load_listing
     @listing = Listing.includes(:item).find(params[:id])
+  end
+
+  def listing_params
+    params.require(:listing).permit(:price, :buy_price)
   end
 end

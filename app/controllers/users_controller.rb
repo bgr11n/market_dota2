@@ -7,7 +7,7 @@ class UsersController < ApplicationController
                             .any_of( { user_id: current_user.id }, { bought_by_id: current_user.id } )
                             .where( status: Listing::SOLD )
                             .order(updated_at: :desc)
-    @active_listings = Listing.unscoped.active.by current_user
+    @active_listings = Listing.unscoped.order(updated_at: :desc).active.by current_user
   end
 
   def auth_callback

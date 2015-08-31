@@ -16,8 +16,18 @@
             ul.list-group
               - @active_listings.each do |listing|
                 li.list-group-item
-                  a class="item-link" href="#{item_url(listing.item.market_hash_name)}"
-                    = render 'listing', listing: listing
+                  .item-link
+                    img src="#{listing.item.icon_url}/40x40f" alt="#{listing.item.market_name}" style="border-color: ##{listing.item.name_color}"/
+                    .item-main-info
+                      h4
+                        a style="color: ##{listing.item.name_color}" href="#{item_url(listing.item.market_hash_name)}"= listing.item.market_name
+                      p= listing.item.type
+                    a.btn.btn-danger.pull-right.delete-listing-btn href="#{listing_path(listing.id)}" data-confirm="Уверены, что хотите удалить лот?" data-method="delete"
+                      span.glyphicon.glyphicon-remove-circle aria-hidden="true"
+                    button.btn.btn-warning.pull-right.edit-listing-btn data-toggle="modal" data-target="#for-edit" data-lid="#{listing.id}"
+                      span.glyphicon.glyphicon-edit aria-hidden="true"
+                    .price
+                      span= formated listing.buy_price
 
       .tab-pane id="listing-history"
         .row
@@ -26,6 +36,14 @@
               - @sold_listings.each do |listing|
                 li.list-group-item
                   a class="item-link #{ created_by_current_user(listing.user_id) ? 'sold' : 'bought' }" href="#{item_url(listing.item.market_hash_name)}"
-                    = render 'listing', listing: listing
+                    img src="#{listing.item.icon_url}/40x40f" alt="#{listing.item.market_name}" style="border-color: ##{listing.item.name_color}"/
+                    .item-main-info
+                      h4 style="color: ##{listing.item.name_color}"
+                        = listing.item.market_name
+                      p= listing.item.type
+                    .price
+                      span= formated listing.buy_price
 
       .tab-pane id="settings" TODO
+
+= render 'listings/form'

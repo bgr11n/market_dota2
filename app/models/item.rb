@@ -21,8 +21,6 @@ class Item
 
   default_scope -> { order(:updated_at => :desc) }
 
-  private
-
   def fetch_min_buy_price
     self.update min_price: self.listings.where(status: Listing::ACTIVE).map(&:buy_price).sort.first
   end

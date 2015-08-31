@@ -26,21 +26,22 @@
       border-radius: 0;
       background-color: transparent;
       border: none;
-      a.item-link.sold {
+      .edit-listing-btn, .delete-listing-btn { margin: 4px 0; }
+      .item-link.sold {
         background-color: #2B4542;
         border-color: #375E58;
         &:hover {
           border-color: #407C74;
         }
       }
-      a.item-link.bought {
+      .item-link.bought {
         background-color: #5F3636;
         border-color: #834E4D;
         &:hover {
           border-color: #AE6A69;
         }
       }
-      a.item-link {
+      .item-link {
         display: block;
         padding: 15px;
         overflow: hidden;
@@ -68,9 +69,15 @@
         .price {
           float: right;
           margin: 12px 0;
+          width: 130px;
+          text-align: center;
           span {
             color: #f8f8f8;
+            font-size: 13px;
           }
+        }
+        .delete-listing-btn {
+          margin-left: 5px;
         }
       }
     }
