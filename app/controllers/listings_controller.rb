@@ -19,7 +19,7 @@ class ListingsController < ApplicationController
 
   def destroy
     @listing.delete
-    redirect_to :back, :flash => { :notice => 'Лот удален.' }
+    redirect_to :root, :flash => { :notice => 'Лот удален.' }
   end
 
   def buy

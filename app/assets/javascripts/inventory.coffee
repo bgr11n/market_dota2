@@ -35,11 +35,11 @@ class Item
     @baseFee = window.app.fee
 
     @fee = (trigger=false) ->
-      base = if trigger then 0.6 else @baseFee
-      1 + base
+      # base = if trigger then 0.6 else @baseFee
+      1 + @baseFee
 
-    @price = ko.observable('').extend({ throttle: 200 })
-    @buyPrice = ko.observable('').extend({ throttle: 200 })
+    @price = ko.observable('').extend({ throttle: 150 })
+    @buyPrice = ko.observable('').extend({ throttle: 150 })
     @steamPriceInfo = ko.observable {}
 
     @errors = ko.observableArray []
@@ -47,15 +47,15 @@ class Item
     @price.subscribe =>
       price = +@price()
       buyPrice = +@buyPrice()
-      newBuyPrice = (price * @fee()).toFixed(2)
-      newBuyPrice = (price * @fee(true)).toFixed(2) if +newBuyPrice - price < 9e-3
+      newBuyPrice = (price * @fee() + 0.005).toFixed(2)
+      # newBuyPrice = (+newBuyPrice + 0.01).toFixed(2) if +newBuyPrice == price
       @buyPrice newBuyPrice if price > 0 and +newBuyPrice != buyPrice
 
     @buyPrice.subscribe =>
       buyPrice = +@buyPrice()
       price = +@price()
-      newPrice = (buyPrice / @fee()).toFixed(2)
-      newPrice = (buyPrice / @fee(true)).toFixed(2) if buyPrice - +newPrice < 9e-3
+      newPrice = (buyPrice / @fee() - 0.005).toFixed(2)
+      # newPrice = (+newPrice - 0.01).toFixed(2) if +newPrice == buyPrice
       @price newPrice if buyPrice > 0 and +newPrice != price
 
     @validate = =>

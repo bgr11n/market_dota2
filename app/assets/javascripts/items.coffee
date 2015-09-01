@@ -9,8 +9,9 @@ $(document).on 'ready page:load', ->
   do managePriceAndBuyPrice
 
 matchData = (data) ->
+  mainColor = if data.item.name_color then '#' + data.item.name_color else '#D2D2D2'
   $('#for-edit form').attr 'action', "/listings/#{data.listing.id}"
-  $('#for-edit img').attr('src', "#{data.item.icon_url}/62x62f").css('border-color', if data.item.name_color then '#' + data.item.name_color else '#D2D2D2' )
+  $('#for-edit img').attr('src', "#{data.item.icon_url}/62x62f").css('border-color', mainColor)
   $('#for-edit h3').text data.item.market_name
   $('#for-edit span.type').text data.item.type
   $('#for-edit #price').val data.listing.price / 100
@@ -21,18 +22,30 @@ managePriceAndBuyPrice = ->
   $("#for-edit #price").bind "keyup change", ->
     price = +$(this).val()
     if price > 0
-      newBuyPrice = (price * fee(price)).toFixed(2)
+      newBuyPrice = (price * fee(price) + 0.005).toFixed(2)
+      # newBuyPrice = (+newBuyPrice + 0.01).toFixed(2) if +newBuyPrice == price
       $("#for-edit #buy-price").val newBuyPrice
 
   $("#for-edit #buy-price").bind "keyup change", ->
     buyPrice = +$(this).val()
     if buyPrice > 0
-      newPrice = (buyPrice / fee(buyPrice)).toFixed(2)
+      newPrice = (buyPrice / fee(buyPrice) - 0.005).toFixed(2)
+      # newPrice = (+newPrice - 0.01).toFixed(2) if +newPrice == buyPrice
       $("#for-edit #price").val newPrice
 
 fee = (val) ->
-  base = if +val <= 0.07 then 0.6 else @baseFee
-  1 + base
+  # base = switch
+  #   when 0.01 <= +val < 0.02 then 0.6
+  #   when 0.02 <= +val < 0.03 then 0.3
+  #   when 0.03 <= +val < 0.04 then 0.25
+  #   when 0.04 <= +val < 0.05 then 0.2
+  #   when 0.05 <= +val < 0.06 then 0.17
+  #   when 0.06 <= +val < 0.07 then 0.14
+  #   when 0.07 <= +val < 0.08 then 0.12
+  #   when 0.08 <= +val < 0.09 then 0.11
+  #   else @baseFee
+
+  1 + @baseFee
 
 $(document).on 'submit','#for-edit form', (e) ->
   $("#for-edit .errors").addClass 'hide'

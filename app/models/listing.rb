@@ -15,6 +15,7 @@ class Listing
   validates :user, presence: { message: 'не может быть пустым.' }
   validates_numericality_of :price, greater_than: 0, message: 'Цена должна быть больше 0.'
   validates_numericality_of :buy_price, greater_than: 0, message: 'Цена покупки должна быть больше 0.'
+  validates_numericality_of :buy_price, greater_than: :price, message: 'Цена покупки должна быть больше цены.'
   validate :user_cant_buy_own_item
   validates :status, inclusion: { in: [0, 100, 200, 300], message: "%{value} не верный статус." }
 
