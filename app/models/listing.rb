@@ -11,13 +11,13 @@ class Listing
   belongs_to :user, inverse_of: :listings
   belongs_to :bought_by, class_name: 'User', inverse_of: :bought
 
-  validates :item, presence: { message: 'не может быть пустым.' }
-  validates :user, presence: { message: 'не может быть пустым.' }
-  validates_numericality_of :price, greater_than: 0, message: 'Цена должна быть больше 0.'
-  validates_numericality_of :buy_price, greater_than: 0, message: 'Цена покупки должна быть больше 0.'
-  validates_numericality_of :buy_price, greater_than: :price, message: 'Цена покупки должна быть больше цены.'
+  validates :item, presence: true
+  validates :user, presence: true
+  validates_numericality_of :price, greater_than: 0
+  validates_numericality_of :buy_price, greater_than: 0
+  validates_numericality_of :buy_price, greater_than: :price
+  validates :status, inclusion: { in: [0, 100, 200, 300] }
   validate :user_cant_buy_own_item
-  validates :status, inclusion: { in: [0, 100, 200, 300], message: "%{value} не верный статус." }
 
   scope :active, -> { where(status: Listing::ACTIVE) }
   scope :by, ->(user) { user ? where(user_id: user.id) : all }
@@ -59,8 +59,6 @@ class Listing
   end
 
   def user_cant_buy_own_item
-    if user_id == bought_by_id
-      errors.add(:bought_by_id, "Вы не можете купить свою вещь.")
-    end
+    errors.add(:bought_by_id, "Вы не можете купить свою вещь") if user_id == bought_by_id
   end
 end
