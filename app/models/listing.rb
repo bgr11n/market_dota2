@@ -59,6 +59,6 @@ class Listing
   end
 
   def user_cant_buy_own_item
-    errors.add(:bought_by_id, "Вы не можете купить свою вещь") if user_id == bought_by_id
+    errors.add(:bought_by, "не может купить свою вещь") if user_id == bought_by_id
   end
 end

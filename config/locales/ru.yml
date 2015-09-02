@@ -3,9 +3,25 @@ ru:
   mongoid:
     models:
       listing: Лот
+      user: Пользователь
     attributes:
+      user:
+        uid: UID
+        steam_id: Steam ID
+        nickname: Ник
+        name: Имя
+        image: Аватар
+        profile_url: Ссылка на профиль
+        balance: Баланс
+        listings: Поле Лоты
+        bought: Поле Покупки
       listing:
         price: Цена
+        status: Статус
+        buy_price: Цена покупки
+        user: Пользователь
+        item: Поле Вещь
+        bought_by: Поле Покупатель
   errors:
     messages:
       inclusion: "имеет непредусмотренное значение"
@@ -32,8 +48,8 @@ ru:
         other: "неверной длины (может быть длиной ровно %{count} символа)"
       taken: "уже существует"
       not_a_number: "не является числом"
-      greater_than: "может иметь лишь значение большее %{count}"
-      greater_than_or_equal_to: "может иметь лишь значение большее или равное %{count}"
+      greater_than: "не может быть меньше %{count}"
+      greater_than_or_equal_to: "может иметь значение большее или равное %{count}"
       equal_to: "может иметь лишь значение, равное %{count}"
       less_than: "может иметь лишь значение меньшее чем %{count}"
       less_than_or_equal_to: "может иметь значение меньшее или равное %{count}"
