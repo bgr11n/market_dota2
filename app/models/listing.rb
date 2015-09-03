@@ -46,8 +46,8 @@ class Listing
       self.save and user.save and buyer.save
       { success: true }
     else
-      errors = self.errors.messages.values.flatten
-      errors += buyer.errors.messages.values.flatten
+      errors = self.errors.full_messages
+      errors += buyer.errors.full_messages
       { success: false, errors: errors }
     end
   end
@@ -59,6 +59,6 @@ class Listing
   end
 
   def user_cant_buy_own_item
-    errors.add(:bought_by, "не может купить свою вещь") if user_id == bought_by_id
+    errors.add(:bought_by, "^Вы не можете купить свою вещь") if user_id == bought_by_id
   end
 end

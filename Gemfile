@@ -37,6 +37,7 @@ gem 'settingslogic'
 gem 'slim-rails'
 gem 'knockoutjs-rails'
 gem 'httparty'
+gem 'custom_error_message', '~> 1.1.1'
 
 
 gem 'rails_12factor', group: :production

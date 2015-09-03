@@ -11,9 +11,9 @@ class ListingsController < ApplicationController
     buy_price = listing_params[:buy_price].to_f * 100
     @listing.assign_attributes price: price, buy_price: buy_price
     if @listing.save
-      redirect_to :back, :flash => { :notice => 'Изменения сохранены.' }
+      redirect_to :back, :flash => { :notice => 'Изменения сохранены' }
     else
-      redirect_to :back, :flash => { :notice => @listing.errors.messages.values.flatten.join("<br>") }
+      redirect_to :back, :flash => { :notice => @listing.errors.full_messages }
     end
   end
 
@@ -24,7 +24,7 @@ class ListingsController < ApplicationController
 
   def buy
     status = @listing.sell_to current_user
-    redirect_to(:back, :flash => { :notice => "Поздравляем с успешной покупкой." }) and return if status[:success]
+    redirect_to(:back, :flash => { :notice => "Поздравляем с успешной покупкой" }) and return if status[:success]
     redirect_to :back, :flash => { :notice => status[:errors].join("<br>") }
   end
 
