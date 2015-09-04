@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: :auth_callback
-  before_action :authenticate, only: [:account]
+  before_action :authenticate, only: [:account, :logout]
 
   def account
     @sold_listings = Listing.unscoped.includes(:item)
