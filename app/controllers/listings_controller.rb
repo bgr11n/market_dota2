@@ -13,7 +13,7 @@ class ListingsController < ApplicationController
     if @listing.save
       redirect_to :back, :flash => { :notice => 'Изменения сохранены' }
     else
-      redirect_to :back, :flash => { :notice => @listing.errors.full_messages }
+      redirect_to :back, :flash => { :error => @listing.errors.full_messages }
     end
   end
 
@@ -25,13 +25,13 @@ class ListingsController < ApplicationController
   def buy
     status = @listing.sell_to current_user
     redirect_to(:back, :flash => { :notice => "Поздравляем с успешной покупкой" }) and return if status[:success]
-    redirect_to :back, :flash => { :notice => status[:errors].join("<br>") }
+    redirect_to :back, :flash => { :error => status[:errors].join("<br>") }
   end
 
   private
 
   def load_listing
-    @listing = Listing.includes(:item).find(params[:id])
+    @listing = Listing.includes(:item).find(params[:id]) or not_found
   end
 
   def listing_params

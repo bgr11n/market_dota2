@@ -13,11 +13,11 @@ class Item
   field :tags, type: Array
   field :human_tags, type: String
   field :steam_price_info, type: Hash
-  field :min_price, type: Integer
+  field :min_price, type: Integer, default: 0
 
   has_many :listings
 
-  validates_numericality_of :min_price, greater_than: 0, message: 'Минимальная цена должна быть больше 0.'
+  validates_numericality_of :min_price, greater_than_or_equal_to: 0
 
   default_scope -> { order(:updated_at => :desc) }
 

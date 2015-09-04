@@ -27,12 +27,12 @@ describe Listing do
   end
 
   describe 'scopes' do
-    it ".active returns listings with status 100" do
+    it '#active returns listings with status 100' do
       active_listing = create(:listing, status: 100)
       expect(Listing.active).to include(active_listing)
     end
 
-    it ".by returns listings by selected user" do
+    it '#by returns listings by selected user' do
       expected_listing = create(:listing)
       user = expected_listing.user
       expect(Listing.by(user)).to include(expected_listing)

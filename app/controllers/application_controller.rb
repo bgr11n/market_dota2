@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   def authenticate
-    redirect_to :root, :flash => { :notice => "Необходимо авторизироваться." } unless signed_in?
+    redirect_to :root, :flash => { :error => "Необходимо авторизироваться" } unless signed_in?
   end
 
   def not_found

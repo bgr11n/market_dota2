@@ -14,6 +14,5 @@ FactoryGirl.define do
     f.tags []
     f.human_tags Faker::Lorem.sentence
     f.steam_price_info {}
-    f.min_price { Faker::Number.decimal(2) }
   end
 end

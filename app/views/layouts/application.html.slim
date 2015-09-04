@@ -44,5 +44,11 @@ html
         span aria-hidden="true" ×
       p= flash[:notice].html_safe
 
+  - if flash[:error]
+    .alert.notices.error.alert-dismissible.fade.in role="alert"
+      button.close type="button" data-dismiss="alert" aria-label="Close"
+        span aria-hidden="true" ×
+      p= flash[:error].html_safe
+
 javascript:
   window.app = { 'fee': #{{Settings[:app][:fee].to_json}} }
