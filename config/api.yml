@@ -1,0 +1,11 @@
+development:
+  url: 'http://market.dota2.local/api'
+
+qa:
+  url: 'http://market.dota2.local/api'
+
+production:
+  url: 'http://market.dota2.local/api'
+
+test:
+  url: 'http://market.dota2.local/api'
