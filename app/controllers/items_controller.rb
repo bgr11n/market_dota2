@@ -2,9 +2,10 @@ class ItemsController < ApplicationController
   before_action :authenticate, only: [:create]
   before_action :parse_json_item, only: [:create]
   before_action :fetch_data, only: [:create]
+  before_action :check_tradability, only: [:create]
 
   def index
-    @items = Item.includes(:listings).all.select { |i| i.listings.size > 0 }
+    @items = Item.includes(:listings).all.select { |i| i.listings.select { |l| l.status == Listing::ACTIVE }.size > 0 }
   end
 
   def create
@@ -16,6 +17,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.includes(:listings).find_by(market_hash_name: params[:market_hash_name]) or not_found
+    @listings = @item.listings.where(status: Listing::ACTIVE)
   end
 
   private

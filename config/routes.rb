@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   root to: 'items#index'
 
@@ -12,4 +13,6 @@ Rails.application.routes.draw do
   get '/account', to: 'users#account'
   post 'users/logout'
   post 'auth/steam/callback', to: 'users#auth_callback'
+
+  mount Sidekiq::Web => '/sidekiq'
 end

@@ -15,5 +15,5 @@
                 br
                 span= formated item.min_price
             .listing-count
-              p= item.listings.size
+              p= item.listings.select{ |l| l.status == Listing::ACTIVE }.size
 

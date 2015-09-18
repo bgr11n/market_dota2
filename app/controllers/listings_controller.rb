@@ -1,6 +1,7 @@
 class ListingsController < ApplicationController
   before_action :authenticate
   before_action :load_listing
+  before_action :check_tradability, only: [:buy]
 
   def show
     render json: { listing: @listing.as_json, item: @listing.item }
@@ -19,7 +20,7 @@ class ListingsController < ApplicationController
 
   def destroy
     @listing.delete
-    redirect_to :root, :flash => { :notice => 'Лот удален.' }
+    redirect_to :back, :flash => { :notice => 'Лот удален.' }
   end
 
   def buy
@@ -31,7 +32,7 @@ class ListingsController < ApplicationController
   private
 
   def load_listing
-    @listing = Listing.includes(:item).find(params[:id]) or not_found
+    @listing = Listing.includes(:item).find_by(status: Listing::ACTIVE, id: params[:id]) or not_found
   end
 
   def listing_params

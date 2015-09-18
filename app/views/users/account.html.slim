@@ -6,7 +6,7 @@
       li
         a href="#listing-history" data-toggle="tab" История сделок
       li
-        a href="#settings" data-toggle="tab" Настройки
+        a href="#settings" data-toggle="tab" Панель управления
 
     <!-- Tab panes -->
     .tab-content
@@ -53,6 +53,43 @@
                           | &nbsp;
                           = formated listing.buy_price
 
-      .tab-pane id="settings" TODO
+      .tab-pane id="settings"
+        .row
+          .col-md-12
+            h3 Передать
+            i= @listings_to_pass.empty? ? 'Список пуст' : ''
+            ul.list-group
+              - @listings_to_pass.each do |listing|
+                li.list-group-item
+                  .item-link
+                    img src="#{listing.item.icon_url}/40x40f" alt="#{listing.item.market_name}" style="border-color: ##{listing.item.name_color}"/
+                    .item-main-info
+                      h4 style="color: ##{listing.item.name_color}"= listing.item.market_name
+                      p= listing.item.type
+                    .pass-item
+                      a.btn.btn-info href="javascript:void(0)" Передать
+                    .timer id="pass-time" data-left="#{listing.await_to.to_i - DateTime.now.to_i}"
+                    .price
+                      span= formated listing.price
+
+        .row
+          .col-md-12
+            h3 Получить
+            i= @listings_to_receive.empty? ? 'Список пуст' : ''
+            ul.list-group
+              - @listings_to_receive.each do |listing|
+                li.list-group-item
+                  .item-link
+                    img src="#{listing.item.icon_url}/40x40f" alt="#{listing.item.market_name}" style="border-color: ##{listing.item.name_color}"/
+                    .item-main-info
+                      h4
+                        a style="color: ##{listing.item.name_color}" href="#{item_url(listing.item.market_hash_name)}"= listing.item.market_name
+                      p= listing.item.type
+                    a.btn.btn-danger.pull-right.delete-listing-btn href="#{listing_path(listing.id)}" data-confirm="Уверены, что хотите удалить лот?" data-method="delete"
+                      span.glyphicon.glyphicon-remove-circle aria-hidden="true"
+                    button.btn.btn-warning.pull-right.edit-listing-btn data-toggle="modal" data-target="#for-edit" data-lid="#{listing.id}"
+                      span.glyphicon.glyphicon-edit aria-hidden="true"
+                    .price
+                      span= formated listing.buy_price
 
 = render 'listings/form'

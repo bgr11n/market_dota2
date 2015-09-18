@@ -4,12 +4,15 @@ class Listing
   field :status, type: Integer
   field :price, type: Integer
   field :buy_price, type: Integer
+  field :await_to, type: DateTime
+  field :guarantee_to, type: DateTime
 
-  AWAITS, ACTIVE, PENDING, SOLD = [0, 100, 200, 300]
+  AWAITS, ACTIVE, SOLD, STORED, FAILED = [0, 100, 200, 300, 400]
 
   belongs_to :item, touch: true
   belongs_to :user, inverse_of: :listings
   belongs_to :bought_by, class_name: 'User', inverse_of: :bought
+  has_many :trade_offers
 
   validates :item, presence: true
   validates :user, presence: true
@@ -21,11 +24,12 @@ class Listing
 
   scope :active, -> { where(status: Listing::ACTIVE) }
   scope :by, ->(user) { user ? where(user_id: user.id) : all }
-  default_scope -> { where(status: Listing::ACTIVE).order(buy_price: :asc) }
+  scope :bought, ->(user) { user ? where(bought_by_id: user.id) : all }
+  default_scope -> { order(buy_price: :asc) }
 
   after_save :update_item
 
-  def as_json
+  def as_json options = {}
     {
       id: id.to_s,
       status: status,
@@ -41,7 +45,9 @@ class Listing
     buyer.balance -= self.buy_price
     self.bought_by_id = buyer.id
     if self.valid? && buyer.valid?
-      self.status = SOLD
+      self.status = AWAITS
+      self.await_to = DateTime.now + 1.hour
+      CheckForReceivedItemWorker.perform_in(1.hour, self.id)
       user.balance += self.price
       self.save and user.save and buyer.save
       { success: true }

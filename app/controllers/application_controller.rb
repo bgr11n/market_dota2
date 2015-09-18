@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
   def not_found
     raise ActionController::RoutingError.new('Not Found')
   end
+
+  def check_tradability
+    # TODO: придумать логику проверки
+    # TODO: впилить ссылку на проверку
+    redirect_to :back, :flash => { :error => "Вам необходимо пройти проверку доступности обменов" } unless current_user.tradable
+  end
 end

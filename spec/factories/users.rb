@@ -9,5 +9,6 @@ FactoryGirl.define do
     f.image { Faker::Avatar.image }
     f.profile_url { Faker::Internet.url }
     f.balance { Faker::Number.between(100, 300) }
+    f.tradable true
   end
 end

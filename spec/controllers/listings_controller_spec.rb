@@ -5,7 +5,10 @@ describe ListingsController do
     context 'when user is logged in' do
       before do
         session[:uid] = create(:user).uid
-        listing = Listing.first
+        listing = create(:listing)
+        puts '------'
+        puts listing.id
+        puts '------'
         @expected = { listing: listing.as_json, item: listing.item }
         get :show, id: listing.id
       end
@@ -24,7 +27,7 @@ describe ListingsController do
       before do
         request.env["HTTP_REFERER"] = 'back'
         session[:uid] = create(:user).uid
-        @listing = Listing.first
+        @listing = create(:listing)
       end
 
       context 'with valid params' do
@@ -59,12 +62,13 @@ describe ListingsController do
     context 'when user is logged in' do
       before do
         session[:uid] = create(:user).uid
-        @listing = Listing.first
+        request.env["HTTP_REFERER"] = 'back'
+        @listing = create(:listing)
       end
 
       context 'with valid params' do
         before { delete :destroy, id: @listing.id }
-        it { expect(response).to redirect_to :root }
+        it { expect(response).to redirect_to 'back' }
         it { expect(flash[:notice]).to be_present }
       end
     end
@@ -81,20 +85,31 @@ describe ListingsController do
       before do
         request.env["HTTP_REFERER"] = 'back'
         @user = create(:user)
-        @listing = Listing.first
+        @listing = create(:listing)
         session[:uid] = @user.uid
       end
 
       context 'with valid params' do
-        before do
-          @user.update balance: @listing.buy_price
-          post :buy, id: @listing.id
+        context 'not being able to trade' do
+          before do
+            @user.update balance: @listing.buy_price, tradable: false
+            post :buy, id: @listing.id
+          end
+          it { expect(response).to redirect_to 'back' }
+          it { expect(flash[:error]).to be_present }
         end
-        it { expect(response).to redirect_to 'back' }
-        it { expect(flash[:notice]).to be_present }
+
+        context 'being able to trade' do
+          before do
+            @user.update balance: @listing.buy_price
+            post :buy, id: @listing.id
+          end
+          it { expect(response).to redirect_to 'back' }
+          it { expect(flash[:notice]).to be_present }
+        end
       end
 
-      context 'when user doesnt have money' do
+      context 'and doesnt have money' do
         before do
           @user.update balance: (@listing.buy_price - 1)
           post :buy, id: @listing.id
@@ -103,7 +118,7 @@ describe ListingsController do
         it { expect(flash[:error]).to be_present }
       end
 
-      context 'when user try to buy own item' do
+      context 'and try to buy own item' do
         before do
           @listing.update user_id: @user.id
           post :buy, id: @listing.id
@@ -112,7 +127,7 @@ describe ListingsController do
         it { expect(flash[:error]).to be_present }
       end
 
-      context 'when user try to buy listing with status SOLD' do
+      context 'and try to buy listing with status SOLD' do
         before { @listing.update status: Listing::SOLD }
         it { expect { post :buy, id: @listing.id }.to raise_error(ActionController::RoutingError) }
       end

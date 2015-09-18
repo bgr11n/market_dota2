@@ -2,6 +2,7 @@ class InventoryController < ApplicationController
   before_action :authenticate, only: [:index]
 
   def index
+    # TODO: Remove items that listed in lisitng from inventory
     res = HTTParty.get(current_user.profile_url + "/inventory/json/570/2?l=russian")
     render 'errors/hidden_profile' and return unless res['success']
 

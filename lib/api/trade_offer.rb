@@ -7,9 +7,7 @@ module Api
 
     class << self
       def make data
-        res = post "/offers/make", body: trade_offer_body(data).to_json,
-                                   headers: headers
-        puts res.to_json
+        post "/offers/make", body: trade_offer_body(data).to_json, headers: headers
       end
 
       private

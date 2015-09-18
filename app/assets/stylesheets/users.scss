@@ -18,7 +18,8 @@
   }
 }
 #listing-history,
-#active-listing {
+#active-listing,
+#settings {
   ul.list-group {
     li.list-group-item {
       margin-top: 15px;
@@ -49,6 +50,8 @@
         color: #8f98a0;
         font-size: 13px;
         background-color: rgba(255,255,255,.05);
+        animation: animationName 2s linear infinite alternate none;
+        -webkit-animation: animationName 2s linear infinite alternate none;
         p { margin: 0; }
         h4 {
           font-size: 16px;
@@ -66,6 +69,17 @@
         .item-main-info {
           float: left;
         }
+        .timer {
+          float: right;
+          margin: 9px 20px;
+          width: 65px;
+          font-size: 16px;
+          color: rgb(187, 89, 19);
+        }
+        .pass-item {
+          float: right;
+          margin: 4px 0;
+        }
         .price {
           float: right;
           margin: 12px 0;
@@ -81,5 +95,23 @@
         }
       }
     }
+  }
+}
+
+@keyframes animationName {
+  0% {
+    border-color: rgba(67,167,197,1);
+  }
+  100% {
+    border-color: #414141;
+  }
+}
+
+@-webkit-keyframes animationName {
+  0% {
+    border-color: rgba(67,167,197,1);
+  }
+  100% {
+    border-color: #414141;
   }
 }

@@ -21,7 +21,7 @@
       .list-header
         h3 Лоты
       ul.list-group
-        - @item.listings.each do |listing|
+        - @listings.each do |listing|
           li.list-group-item
             .listing
               img style="border-color: #{ @item.name_color ? '#' + @item.name_color : '#D2D2D2' }" src="#{@item.icon_url}/62x62f"

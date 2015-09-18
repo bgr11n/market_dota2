@@ -7,7 +7,9 @@ class UsersController < ApplicationController
                             .any_of( { user_id: current_user.id }, { bought_by_id: current_user.id } )
                             .where( status: Listing::SOLD )
                             .order(updated_at: :desc)
-    @active_listings = Listing.unscoped.order(updated_at: :desc).active.by current_user
+    @active_listings = Listing.includes(:item).order(updated_at: :desc).active.by current_user
+    @listings_to_pass = Listing.includes(:item).where(status: Listing::AWAITS).by current_user
+    @listings_to_receive = Listing.includes(:item).where(:status.in => [Listing::STORED, Listing::AWAITS]).bought current_user
   end
 
   def auth_callback
